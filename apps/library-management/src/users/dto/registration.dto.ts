@@ -64,7 +64,4 @@ export class RegistrationDto {
     }
   )
   password: string;
-
-  @IsOptional()
-  image: string;
 }
