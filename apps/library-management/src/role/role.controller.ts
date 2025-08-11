@@ -6,11 +6,16 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { RoleService } from './role.service';
 import { CreateRoleDto } from './dto/create-role.dto';
+import { AuthGuard } from '../auth/guards/local.guard';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('role')
+@ApiBearerAuth('jwt')
+@UseGuards(AuthGuard)
 export class RoleController {
   constructor(private readonly roleService: RoleService) {}
 

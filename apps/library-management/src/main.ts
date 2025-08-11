@@ -30,6 +30,16 @@ async function bootstrap() {
     .setDescription(
       'This is rest API for Library Management including Authentication, Roles, Users, Books, Racks'
     )
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        name: 'Authorization',
+        in: 'header',
+      },
+      'jwt'
+    )
     .build();
 
   const document = SwaggerModule.createDocument(app, swaggerOptions);
