@@ -1,13 +1,10 @@
-import {
-  registerDecorator,
-  ValidationOptions,
-} from 'class-validator';
+import { registerDecorator, ValidationOptions } from 'class-validator';
 import { IsUniqueConstraint } from '../custom-validator/is-unique.validator';
 
 export function IsUnique(
   entity: Function,
   field: string,
-  validationOptions?: ValidationOptions,
+  validationOptions?: ValidationOptions
 ) {
   return function (object: Object, propertyName: string) {
     registerDecorator({

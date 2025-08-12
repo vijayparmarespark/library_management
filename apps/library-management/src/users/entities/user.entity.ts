@@ -4,6 +4,7 @@ import {
   Column,
   ManyToOne,
   Timestamp,
+  JoinColumn,
 } from 'typeorm';
 import { Role } from '../../role/entities/role.entity';
 
@@ -28,7 +29,7 @@ export class User {
   password: string;
 
   @ManyToOne(() => Role, (role) => role.users)
-  role_id: Role;
+  role: Role;
 
   @Column({ type: 'int', nullable: true })
   otp: number;

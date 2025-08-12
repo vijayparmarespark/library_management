@@ -19,7 +19,10 @@ export class AuthService {
   ) {}
 
   async signin(email: string, password: string) {
-    const findUser = await this.userRepository.findOneBy({ email });
+    const findUser = await this.userRepository.findOne({
+      where: { email },
+      relations: ['role'],
+    });
     if (!findUser) {
       throw new UnauthorizedException('Invalid Credentials');
     }
@@ -32,6 +35,7 @@ export class AuthService {
     const token = this.jwtService.sign({
       id: findUser.id,
       email: findUser.email,
+      permissions: findUser.role.permissions,
     });
 
     const result = { id: findUser.id, email: findUser.email, token };

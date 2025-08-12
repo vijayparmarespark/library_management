@@ -1,11 +1,10 @@
-
 import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
   ValidationArguments,
 } from 'class-validator';
 import { Injectable } from '@nestjs/common';
-import { DataSource } from 'typeorm';
+import { DataSource, Not } from 'typeorm';
 import { InjectDataSource } from '@nestjs/typeorm';
 
 @ValidatorConstraint({ async: true })
@@ -15,15 +14,31 @@ export class IsUniqueConstraint implements ValidatorConstraintInterface {
 
   async validate(value: any, args: ValidationArguments): Promise<boolean> {
     const [EntityClass, field] = args.constraints;
+    const repository = this.dataSource.getRepository(EntityClass);
 
     if (!value) return true;
 
-    const repository = this.dataSource.getRepository(EntityClass);
+    const objectBeingValidated = args.object as any;
+    const currentId = objectBeingValidated?.id;
 
-    const existing = await repository.findOne({
-      where: { [field]: value },
-    });
-
+    let existing;
+    console.log(currentId, 'currentId');
+    if (currentId) {
+      existing = await repository.findOne({
+        where: {
+          [field]: value,
+          id: Not(currentId),
+        },
+      });
+    } else {
+      existing = await repository.findOne({
+        where: {
+          [field]: value,
+        },
+      });
+    }
+    console.log(existing, 'existing check');
+    // If existing found, it means conflict
     return !existing;
   }
 
