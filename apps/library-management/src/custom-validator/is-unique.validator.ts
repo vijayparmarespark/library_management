@@ -22,7 +22,6 @@ export class IsUniqueConstraint implements ValidatorConstraintInterface {
     const currentId = objectBeingValidated?.id;
 
     let existing;
-    console.log(currentId, 'currentId');
     if (currentId) {
       existing = await repository.findOne({
         where: {
@@ -37,8 +36,6 @@ export class IsUniqueConstraint implements ValidatorConstraintInterface {
         },
       });
     }
-    console.log(existing, 'existing check');
-    // If existing found, it means conflict
     return !existing;
   }
 

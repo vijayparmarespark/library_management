@@ -9,6 +9,8 @@ import {
 import { IsUnique } from '../../custom-decorator/is-unique.decorator';
 import { User } from '../entities/user.entity';
 import { ApiProperty } from '@nestjs/swagger';
+import { Binary } from 'typeorm';
+import { UploadedFile } from '@nestjs/common';
 
 export class RegistrationDto {
   @ApiProperty({
@@ -64,4 +66,7 @@ export class RegistrationDto {
     }
   )
   password: string;
+
+  @ApiProperty({ type: 'string', format: 'binary', required: true })
+  profile_image: string;
 }

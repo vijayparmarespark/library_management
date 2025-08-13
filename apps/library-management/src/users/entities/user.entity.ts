@@ -31,6 +31,9 @@ export class User {
   @ManyToOne(() => Role, (role) => role.users)
   role: Role;
 
+  @Column({ type: 'varchar', nullable: true })
+  profile_image: string;
+
   @Column({ type: 'int', nullable: true })
   otp: number;
 

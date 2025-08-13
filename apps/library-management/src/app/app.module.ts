@@ -7,6 +7,7 @@ import { Role } from '../role/entities/role.entity';
 import { User } from '../users/entities/user.entity';
 import { UsersModule } from '../users/users.module';
 import { AuthModule } from '../auth/auth.module';
+import { FileUploadModule } from '../file-upload/file-upload.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { AuthModule } from '../auth/auth.module';
       autoLoadEntities: true,
       synchronize: true,
     }),
+    FileUploadModule,
     RoleModule,
     UsersModule,
     AuthModule,
